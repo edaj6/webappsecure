@@ -13,6 +13,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.AspNetCore.Authentication.Twitter;
+using Microsoft.AspNetCore.Authentication;
 
 namespace WebAppSecure
 {
@@ -33,6 +34,7 @@ namespace WebAppSecure
                     Configuration.GetConnectionString("DefaultConnection")));
             
             services.AddRazorPages();
+            services.AddControllers();
 
             services.AddIdentity<IdentityUser, IdentityRole>(options => options.SignIn.RequireConfirmedAccount = false)
                .AddEntityFrameworkStores<ApplicationDbContext>()
@@ -46,6 +48,16 @@ namespace WebAppSecure
                   twitterOptions.ConsumerSecret = Configuration["Authentication:Twitter:ConsumerSecret"];
                   twitterOptions.RetrieveUserDetails = true;
               });
+              //.AddIdentityServerJwt();
+
+            //add services for jwt api
+            //using Microsoft.AspNetCore.ApiAuthorization.IdentityServer
+            //services.AddIdentityServer()
+            //    .AddApiAuthorization<IdentityUser, ApplicationDbContext>();
+
+            //services.AddAuthentication()
+            //    .AddIdentityServerJwt();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -74,7 +86,11 @@ namespace WebAppSecure
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapRazorPages();
+                endpoints.MapControllers();
             });
+
+            //setup api auth
+            //app.UseIdentityServer();
         }
     }
 }
