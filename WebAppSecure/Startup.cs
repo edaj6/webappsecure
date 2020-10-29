@@ -13,6 +13,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.AspNetCore.Authentication.Twitter;
+using Microsoft.AspNetCore.Authentication;
 
 namespace WebAppSecure
 {
@@ -89,6 +90,9 @@ namespace WebAppSecure
                 endpoints.MapRazorPages();
                 endpoints.MapControllers();
             });
+
+            //setup api auth
+            //app.UseIdentityServer();
         }
     }
 }
