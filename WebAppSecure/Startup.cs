@@ -33,6 +33,7 @@ namespace WebAppSecure
                     Configuration.GetConnectionString("DefaultConnection")));
             
             services.AddRazorPages();
+            services.AddControllers();
 
             services.AddIdentity<IdentityUser, IdentityRole>(options => options.SignIn.RequireConfirmedAccount = false)
                .AddEntityFrameworkStores<ApplicationDbContext>()
@@ -46,6 +47,17 @@ namespace WebAppSecure
                   twitterOptions.ConsumerSecret = Configuration["Authentication:Twitter:ConsumerSecret"];
                   twitterOptions.RetrieveUserDetails = true;
               });
+
+            services.AddCors(options =>
+            {
+                options.AddDefaultPolicy(
+                    builder =>
+                    {
+                        builder.AllowAnyOrigin();
+                        builder.AllowAnyHeader();
+                        builder.AllowAnyMethod();
+                    });
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -55,6 +67,7 @@ namespace WebAppSecure
             {
                 app.UseDeveloperExceptionPage();
                 app.UseDatabaseErrorPage();
+                app.UseCors();
             }
             else
             {
@@ -74,6 +87,7 @@ namespace WebAppSecure
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapRazorPages();
+                endpoints.MapControllers();
             });
         }
     }
