@@ -90,9 +90,6 @@ namespace WebAppSecure
                 endpoints.MapRazorPages();
                 endpoints.MapControllers();
             });
-
-            //setup api auth
-            //app.UseIdentityServer();
         }
     }
 }
