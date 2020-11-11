@@ -38,7 +38,7 @@ namespace WebAppSecure
 
             services.AddIdentity<IdentityUser, IdentityRole>(options => options.SignIn.RequireConfirmedAccount = false)
                .AddEntityFrameworkStores<ApplicationDbContext>()
-               .AddDefaultUI()
+               .AddDefaultUI()               
                .AddDefaultTokenProviders();
 
             services.AddAuthentication()
